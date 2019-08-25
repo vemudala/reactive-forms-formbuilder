@@ -1,0 +1,89 @@
+here in this we can make required to form name if any field misses button get disabled
+FOLLOW STEP 1, 2, 3 FOR DISABLE BTN
+
+ts
+
+export class RegisterComponent implements OnInit { //REACTIVE FORMS
+registerForm:FormGroup; // use this in html opening form tag // this is used when we use form-group
+// userName:FormControl;//REACTIVE CONTROL    // if u hav multiple imputs , u can create like this lines multiple
+  constructor(private formBuilder:FormBuilder) {
+    // this.userName=new FormControl();   //if u hav multiple imputs , u can create like this lines multiple
+    // this.userName.setValue('UI Tricks');//if u hav multiple imputs , u can create like this lines multiple
+    //above 2 lines are for single input in reactive forms // if u need more inputs repeat above steps 4 every inpt
+    //for morethan 1 input use formgroup , import it in app.modules // next follow below
+    this.registerForm =  this.formBuilder.group({ //new FormGroup({ intialy formgrp //changed to formbuilder
+      userName :['Mahesh', Validators.required],  //new FormControl('UI Tricks'),
+      email: ['angular@gmail.com',Validators.required], //new FormControl('conatact@afd.com'),
+      phone:['9090989090'], //new FormControl('985456454'),
+      billingAddress: this.formBuilder.group({//new FormGroup({
+        doorNumber:['12/3'],// new FormControl('x'),
+        city: ['spt'] ,    //new FormControl('sdpt'),
+        zip:   ['',Validators.required]     //new FormControl('500020')   //STEP 3 HERE WE HAVE TO ADD VALIDOTRO.REQUIRED TO INPUTS U PASS
+
+      })
+    })
+
+   }
+
+  ngOnInit() {
+  }
+register(){
+  console.log(this.registerForm.value);
+}
+
+HTML***********************************************
+
+<div class="container">
+    <!-- //REACTIVE FORMS  -->
+    <form class="form-group" [formGroup]="registerForm" >   // THIS IS FORM NAME USING FORM NAME WE CAN DISBLE BTN STEP 1
+        <!-- here above formgroup  added  for multiple inputs and chg evry inp [formcontro] to formControlName-->
+        <div class="form-group">
+            <label for="User Name"></label>
+            <!-- <input type="text" class="form-control" [formControl]="userName"> demo of single lined form -->
+            <input type="text" class="form-control" formControlName="userName">
+             <!--[formControl]="userName" without using formgroup-->
+             <!-- formControlName="userName" if we use formgroup -->
+     <div class="alert alert-danger" *ngIf="registerForm.get('userName').status=='INVALID'">
+         <!-- here we are asking to get control username -->
+         username required..
+     </div>
+            </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" formControlName="email">
+            <div class="alert alert-danger" *ngIf="registerForm.get('email').status=='INVALID'">
+                    email required..
+                </div>
+        </div>
+        <div class="form-group">
+            <label for="phonenumber">Phone number</label>
+            <input type="phone" class="form-control" formControlName="phone">
+        </div>
+        <div [formGroup]="registerForm.controls.billingAddress">
+            <h3>Billing Address</h3>
+            <label >
+                Door Number
+                <input type="text"  class="form-control"  formControlName="doorNumber">
+            </label>
+            <label >
+                City
+                <input type="text"  class="form-control"  formControlName="city">
+            </label>
+            <label >
+                PinCode
+                <input type="text"  class="form-control"  formControlName="zip">
+            </label>
+        </div>
+        <div>
+            <button class="btn btn-primary" (click)="register()" [disabled]="!registerForm.valid">Register</button> //STEP2 DISABLE PROPTY
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+
