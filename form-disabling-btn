@@ -18,7 +18,8 @@ registerForm:FormGroup; // use this in html opening form tag // this is used whe
       billingAddress: this.formBuilder.group({//new FormGroup({
         doorNumber:['12/3'],// new FormControl('x'),
         city: ['spt'] ,    //new FormControl('sdpt'),
-        zip:   ['',Validators.required]     //new FormControl('500020')   //STEP 3 HERE WE HAVE TO ADD VALIDOTRO.REQUIRED TO INPUTS U PASS
+        zip:   ['',Validators.required]     //new FormControl('500020')  
+        //STEP 3 HERE WE HAVE TO ADD VALIDOTRO.REQUIRED TO INPUTS U PASS // AND HERE WE ARE GIVEN REQ TO UNAME, EMAIL,AND ZIP
 
       })
     })
